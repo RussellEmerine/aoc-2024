@@ -29,7 +29,7 @@ def main : IO Unit := do
   println! "Test: {task1 test.toList}"
   println! "Expected: {some 11}"
   let task ← IO.FS.lines (System.FilePath.mk "Data/Day1/task.txt")
-  println! "Test: {task1 task.toList}"
+  println! "Task: {task1 task.toList}"
 
 end Task1
 
@@ -54,7 +54,7 @@ def main : IO Unit := do
   println! "Test: {task2 test.toList}"
   println! "Expected: {some 31}"
   let task ← IO.FS.lines (System.FilePath.mk "Data/Day1/task.txt")
-  println! "Test: {task2 task.toList}"
+  println! "Task: {task2 task.toList}"
 
 end Task2
 
