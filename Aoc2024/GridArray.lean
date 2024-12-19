@@ -2,7 +2,7 @@ import Mathlib.Data.Matrix.Basic
 import Mathlib.Tactic.DeriveFintype
 
 def Array.modify' (a : Array α) (i : Fin a.size) (f : α → α) : Array α := 
-  a.set i (f (a.get i))
+  a.set i (f a[i])
 
 theorem Array.size_modify' (a : Array α) (i : Fin a.size) (f : α → α)
 : (a.modify' i f).size = a.size := by
@@ -42,9 +42,13 @@ instance [ToString α] : ToString (GridArray m n α) where
   toString grid := toString grid.array 
 
 def get (grid : GridArray m n α) (p : Idx m n) : α :=
-  (grid.array.get
-    ⟨p.fst, by rw [grid.h₁]; exact p.fst.is_lt⟩).get
-      ⟨p.snd, by rw [Array.get_eq_getElem, grid.h₂]; exact p.snd.is_lt⟩
+  have : p.fst < grid.array.size := by
+    rw [grid.h₁]
+    exact p.fst.is_lt
+  have : p.snd < grid.array[p.fst].size := by
+    rw [Fin.getElem_fin, grid.h₂ _]
+    exact p.snd.is_lt
+  grid.array[p.fst][p.snd]
 
 def modify (grid : GridArray m n α) (p : Idx m n) (f : α → α)
 : GridArray m n α := {

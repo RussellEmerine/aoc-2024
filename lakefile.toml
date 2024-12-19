@@ -10,11 +10,6 @@ pp.unicode.fun = true # pretty-prints `fun a ↦ b`
 name = "mathlib"
 scope = "leanprover-community"
 
-[[require]]
-name = "batteries"
-scope = "leanprover-community"
-rev = "main"
-
 [[lean_lib]]
 name = "Aoc2024"
 

@@ -1,6 +1,6 @@
 import Lean.Data.Json.Parser
 import Mathlib.Data.Nat.Dist
-import Batteries.Data.HashMap
+import Std.Data.HashMap
 
 namespace Day1
 
@@ -37,8 +37,8 @@ namespace Task2
 
 def N := 100000
 
-def count (xs : List Nat) : Batteries.HashMap Nat Nat := 
-  xs.foldl (fun a x => a.insert x (a.findD x 0 + 1)) Batteries.HashMap.empty
+def count (xs : List Nat) : Std.HashMap Nat Nat := 
+  xs.foldl (fun a x => a.insert x (a.getD x 0 + 1)) Std.HashMap.empty
 
 def task2 (input : List String) : Option Nat := do
   let pairs ← getPairs input
@@ -47,7 +47,7 @@ def task2 (input : List String) : Option Nat := do
   let b := (b.toArray.qsort (·<·)).toList
   let a := count a
   let b := count b
-  return a.fold (fun s a c => s + a * c * b.findD a 0) 0
+  return a.fold (fun s a c => s + a * c * b.getD a 0) 0
 
 def main : IO Unit := do
   let test ← IO.FS.lines (System.FilePath.mk "Data/Day1/test.txt")
