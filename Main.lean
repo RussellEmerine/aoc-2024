@@ -1,4 +1,4 @@
 import «Aoc2024»
 
 def main : IO Unit := do
-  Day5.main 
+  Day6.main 

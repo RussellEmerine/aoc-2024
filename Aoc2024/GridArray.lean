@@ -1,5 +1,6 @@
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Tactic.DeriveFintype
+import Mathlib.Logic.Equiv.Fin
 
 def Array.modify' (a : Array α) (i : Fin a.size) (f : α → α) : Array α := 
   a.set i (f a[i])
@@ -9,7 +10,50 @@ theorem Array.size_modify' (a : Array α) (i : Fin a.size) (f : α → α)
   unfold modify'
   rw [Array.size_set]
 
+-- (i, j) where i is the row number and j is the col number
+-- row 0 on top, col 0 on left
 abbrev Idx m n := Fin m × Fin n
+
+inductive Direction
+| U
+| D
+| L
+| R
+deriving Fintype, Hashable, DecidableEq, Repr  
+
+namespace Direction
+
+def cw : Direction → Direction
+| U => R
+| R => D
+| D => L
+| L => U
+
+def ccw : Direction → Direction
+| U => L
+| L => D
+| D => R
+| R => U
+
+end Direction
+
+namespace Idx
+
+variable {m n : ℕ}
+
+def rotate (p : Idx m n) : Direction → Idx m n
+| .U => ((finRotate _).symm p.fst, p.snd) 
+| .D => (finRotate _ p.fst, p.snd) 
+| .L => (p.fst, (finRotate _).symm p.snd) 
+| .R => (p.fst, finRotate _ p.snd) 
+
+def move (p : Idx m n) : Direction → Option (Idx m n)
+| .U => if 0 < p.fst.val then some ((finRotate _).symm p.fst, p.snd) else none 
+| .D => if p.fst.val + 1 < m then some (finRotate _ p.fst, p.snd) else none 
+| .L => if 0 < p.snd.val then some (p.fst, (finRotate _).symm p.snd) else none 
+| .R => if p.snd.val + 1 < n then some (p.fst, finRotate _ p.snd) else none 
+
+end Idx 
 
 structure GridArray (m n : ℕ) (α) where
   (array : Array (Array α))
@@ -39,7 +83,7 @@ instance [Inhabited α] : Inhabited (GridArray m n α) where
   default := ofFn default 
 
 instance [ToString α] : ToString (GridArray m n α) where
-  toString grid := toString grid.array 
+  toString grid := toString grid.array
 
 def get (grid : GridArray m n α) (p : Idx m n) : α :=
   have : p.fst < grid.array.size := by
@@ -49,6 +93,9 @@ def get (grid : GridArray m n α) (p : Idx m n) : α :=
     rw [Fin.getElem_fin, grid.h₂ _]
     exact p.snd.is_lt
   grid.array[p.fst][p.snd]
+
+def map (f : α → β) (grid : GridArray m n α) : GridArray m n β :=
+  ofFn fun i j => f (grid.get (i, j))
 
 def modify (grid : GridArray m n α) (p : Idx m n) (f : α → α)
 : GridArray m n α := {
