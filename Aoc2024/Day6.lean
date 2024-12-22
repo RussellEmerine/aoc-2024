@@ -154,7 +154,7 @@ def main : IO Unit := do
   println! "Expected: {41}"
   let lines ← IO.FS.lines (System.FilePath.mk "Data/Day6/task.txt")
   let ⟨_, _, map⟩ ← IO.ofExcept (Map.ofLines lines)
-  println! "Test: {map.cells.size}"
+  println! "Task: {map.cells.size}"
 
 end Task1
 
@@ -167,7 +167,7 @@ def main : IO Unit := do
   println! "Expected: {6}"
   let lines ← IO.FS.lines (System.FilePath.mk "Data/Day6/task.txt")
   let ⟨_, _, map⟩ ← IO.ofExcept (Map.ofLines lines)
-  println! "Test: {map.loop_cells.length}"
+  println! "Task: {map.loop_cells.length}"
 
 end Task2
 
