@@ -35,6 +35,8 @@ def ccw : Direction → Direction
 | D => R
 | R => U
 
+def univ : List Direction := [U, L, D, R]
+
 end Direction
 
 namespace Idx
