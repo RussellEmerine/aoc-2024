@@ -51,7 +51,7 @@ def main : IO Unit := do
   let line ← IO.FS.readFile (System.FilePath.mk "Data/Day9/task.txt")
   let map := diskMap line
   if h : map.size ≠ 0 then 
-    println! "Test: {checksum <| rearrange map h}"
+    println! "Task: {checksum <| rearrange map h}"
   else
     IO.throwServerError "tried to do empty file"
 
@@ -116,7 +116,7 @@ def main : IO Unit := do
   println! "Test: {line |> diskMap |> rearrange |> checksum}"
   println! "Expected: {2858}"
   let line ← IO.FS.readFile (System.FilePath.mk "Data/Day9/task.txt")
-  println! "Test: {line |> diskMap |> rearrange |> checksum}"
+  println! "Task: {line |> diskMap |> rearrange |> checksum}"
 
 end Task2
 

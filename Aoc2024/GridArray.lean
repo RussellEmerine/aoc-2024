@@ -1,5 +1,6 @@
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Tactic.DeriveFintype
+import Mathlib.Tactic.Linarith
 import Mathlib.Logic.Equiv.Fin
 
 def Array.modify' (a : Array α) (i : Fin a.size) (f : α → α) : Array α := 
@@ -54,6 +55,59 @@ def move (p : Idx m n) : Direction → Option (Idx m n)
 | .D => if p.fst.val + 1 < m then some (finRotate _ p.fst, p.snd) else none 
 | .L => if 0 < p.snd.val then some (p.fst, (finRotate _).symm p.snd) else none 
 | .R => if p.snd.val + 1 < n then some (p.fst, finRotate _ p.snd) else none 
+
+def equivFinMul (m n : Nat) : Equiv (Idx m n) (Fin (m * n)) where
+  toFun p := {
+    val := n * p.fst.val + p.snd.val
+    isLt := by
+      rcases p with ⟨⟨i, hi⟩, ⟨j, hj⟩⟩
+      cases m
+      case zero => exact (i.not_lt_zero hi).elim 
+      case succ m =>
+      cases n
+      case zero => exact (j.not_lt_zero hj).elim 
+      case succ n =>
+      dsimp
+      rw [mul_comm, add_mul]
+      apply add_lt_add_of_le_of_lt
+      · apply Nat.mul_le_mul_right
+        exact Nat.lt_add_one_iff.mp hi
+      · rw [Nat.one_mul]
+        exact hj
+  }
+  invFun i := ({
+    val := i / n
+    isLt := by
+      rw [Nat.div_lt_iff_lt_mul]
+      · exact i.is_lt
+      · by_contra h
+        replace h := Nat.eq_zero_of_not_pos h
+        subst h
+        rw [mul_zero] at i
+        exact i.elim0
+  }, {
+    val := i % n
+    isLt := by
+      apply Nat.mod_lt
+      by_contra h
+      replace h := Nat.eq_zero_of_not_pos h
+      subst h
+      rw [mul_zero] at i
+      exact i.elim0
+  })
+  left_inv p := by
+    rcases p with ⟨⟨i, hi⟩, ⟨j, hj⟩⟩
+    ext
+    · dsimp
+      rw [Nat.mul_add_div (Nat.zero_lt_of_lt hj)]
+      rw [Nat.div_eq_of_lt hj, add_zero]
+    · dsimp
+      rw [Nat.mul_add_mod]
+      exact Nat.mod_eq_of_lt hj
+  right_inv i := by
+    ext
+    dsimp
+    rw [Nat.div_add_mod i.val n]
 
 end Idx 
 

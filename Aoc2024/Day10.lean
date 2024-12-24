@@ -56,7 +56,7 @@ def main : IO Unit := do
     | some a => pure a 
     | none => IO.throwServerError "oops had a non-digit in my digit grid"
   let ⟨_, _, grid⟩ ← IO.ofExcept <| GridArray.ofLines (lines.map List.toArray)
-  println! "Test: {scoreSum grid}"
+  println! "Task: {scoreSum grid}"
 
 end Task1
 
@@ -75,7 +75,7 @@ def main : IO Unit := do
     | some a => pure a 
     | none => IO.throwServerError "oops had a non-digit in my digit grid"
   let ⟨_, _, grid⟩ ← IO.ofExcept <| GridArray.ofLines (lines.map List.toArray)
-  println! "Test: {ratingSum grid}"
+  println! "Task: {ratingSum grid}"
 
 end Task2
 

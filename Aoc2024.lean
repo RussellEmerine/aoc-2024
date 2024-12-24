@@ -8,3 +8,5 @@ import Aoc2024.Day7
 import Aoc2024.Day8
 import Aoc2024.Day9
 import Aoc2024.Day10
+import Aoc2024.Day11
+import Aoc2024.Day12

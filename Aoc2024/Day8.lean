@@ -54,7 +54,7 @@ def main : IO Unit := do
   println! "Expected: {14}"
   let lines ← IO.FS.lines (System.FilePath.mk "Data/Day8/task.txt")
   let ⟨_, _, grid⟩ ← IO.ofExcept <| GridArray.ofLines <| lines.map <| List.toArray ∘ String.toList 
-  println! "Test: {antinode_locations grid |>.size}"
+  println! "Task: {antinode_locations grid |>.size}"
 
 end Task1
 
@@ -67,7 +67,7 @@ def main : IO Unit := do
   println! "Expected: {34}"
   let lines ← IO.FS.lines (System.FilePath.mk "Data/Day8/task.txt")
   let ⟨_, _, grid⟩ ← IO.ofExcept <| GridArray.ofLines <| lines.map <| List.toArray ∘ String.toList 
-  println! "Test: {antinode_locations' grid |>.size}"
+  println! "Task: {antinode_locations' grid |>.size}"
 
 end Task2
 
