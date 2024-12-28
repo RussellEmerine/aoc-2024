@@ -1,4 +1,4 @@
-import «Aoc2024».GridArray
+import «Aoc2024».Util.GridArray
 
 namespace Day4
 

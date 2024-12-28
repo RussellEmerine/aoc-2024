@@ -1,11 +1,11 @@
-import Lean.Data.Json.Parser
+import Std.Internal.Parsec.String 
 
 namespace Day2
 
 open Std.Internal.Parsec.String 
 
 def parser : Parser (Array Nat) := Std.Internal.Parsec.many <| do
-  let a ← Lean.Json.Parser.natNonZero
+  let a ← digits
   ws
   return a
 

@@ -2,7 +2,7 @@ import Std.Data.HashSet.Basic
 import Mathlib.Logic.Function.Iterate
 import Mathlib.Data.Fintype.Card
 import Mathlib.Tactic.Linarith
-import «Aoc2024».GridArray
+import «Aoc2024».Util.GridArray
 
 namespace Day6
 

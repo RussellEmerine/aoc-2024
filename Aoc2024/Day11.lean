@@ -1,8 +1,8 @@
-import Lean.Data.Json.Parser
 import Mathlib.Data.Nat.Log
 import Mathlib.Data.List.Monad
 import Mathlib.Algebra.Group.Nat.Even
-import «Aoc2024».Counter
+import Std.Internal.Parsec.String 
+import «Aoc2024».Util.Counter
 
 namespace Day11
 
@@ -24,7 +24,7 @@ def blink (stones : Counter Nat) : Counter Nat := Id.run <| do
 def count_stones (stones : List Nat) (times : Nat) : Nat :=
   stones |> Counter.ofList |> blink^[times] |> Counter.total 
 
-def parser : Parser (Array Nat) := (Lean.Json.Parser.nat <* ws).many
+def parser : Parser (Array Nat) := (digits <* ws).many
 
 namespace Task1
 

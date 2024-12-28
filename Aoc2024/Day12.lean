@@ -1,8 +1,8 @@
 import Mathlib.Logic.Equiv.List
 import Std.Data.HashSet.Basic 
-import «Aoc2024».Counter 
-import «Aoc2024».GridArray 
-import «Aoc2024».UnionFind 
+import «Aoc2024».Util.Counter 
+import «Aoc2024».Util.GridArray 
+import «Aoc2024».Util.UnionFind 
 
 namespace Day12
 

@@ -1,20 +1,20 @@
-import Lean.Data.Json.Parser
 import Std.Data.HashMap.Basic
-import «Aoc2024».Digraph.TopoSort
+import Std.Internal.Parsec.String 
+import «Aoc2024».Util.TopoSort
 
 open Std.Internal.Parsec.String
 
 namespace Day5
 
 def parseRule : Parser (Nat × Nat) := do
-  let a ← Lean.Json.Parser.nat 
+  let a ← digits 
   skipString "|"
-  let b ← Lean.Json.Parser.nat 
+  let b ← digits 
   return (a, b)
 
 def parseUpdate : Parser (List Nat) := do
-  let a ← Lean.Json.Parser.nat
-  let arr ← (skipString "," *> Lean.Json.Parser.nat).many
+  let a ← digits 
+  let arr ← (skipString "," *> digits).many
   return a :: arr.toList  
 
 def satisfiesRules (update : List Nat) (rules : List (Nat × Nat)) : Bool :=

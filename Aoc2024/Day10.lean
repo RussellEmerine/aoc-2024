@@ -1,5 +1,5 @@
 import Std.Data.HashSet.Basic
-import «Aoc2024».GridArray
+import «Aoc2024».Util.GridArray
 
 namespace Day10
 

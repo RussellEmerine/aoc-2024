@@ -1,6 +1,6 @@
 import Mathlib.Data.List.Monad
 import Mathlib.Data.Nat.Log
-import Lean.Data.Json.Parser
+import Std.Internal.Parsec.String 
 
 open Std.Internal.Parsec.String 
 
@@ -13,9 +13,9 @@ structure Equation where
 namespace Equation
 
 def parser : Parser Equation := do
-  let value ← Lean.Json.Parser.nat
+  let value ← digits 
   skipString ":"
-  let numbers ← (ws *> Lean.Json.Parser.nat).many
+  let numbers ← (ws *> digits).many
   return { value, numbers := numbers.toList }  
 
 def evaluations (values : List Nat) : List Nat → List Nat

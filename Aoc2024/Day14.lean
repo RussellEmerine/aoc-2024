@@ -1,6 +1,6 @@
-import Std.Internal.Parsec.String
 import Mathlib.Data.ZMod.Basic
-import «Aoc2024».GridArray
+import Std.Internal.Parsec.String
+import «Aoc2024».Util.GridArray
 
 open Std.Internal.Parsec.String
 

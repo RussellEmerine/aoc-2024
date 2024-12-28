@@ -1,15 +1,15 @@
-import Lean.Data.Json.Parser
 import Mathlib.Data.Nat.Dist
 import Std.Data.HashMap
-
-namespace Day1
+import Std.Internal.Parsec.String 
 
 open Std.Internal.Parsec.String 
 
+namespace Day1
+
 def parser : Parser (Nat × Nat) := do
-  let a ← Lean.Json.Parser.natNonZero
+  let a ← digits
   ws
-  let b ← Lean.Json.Parser.natNonZero
+  let b ← digits
   return (a, b) 
 
 def getPairs (input : List String) : Option (List (Nat × Nat)) := 
