@@ -20,7 +20,7 @@ inductive Direction
 | D
 | L
 | R
-deriving Fintype, Hashable, DecidableEq, Repr  
+deriving Fintype, Hashable, DecidableEq, Repr
 
 namespace Direction
 
